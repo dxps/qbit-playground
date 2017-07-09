@@ -3,6 +3,8 @@
 This playground includes various QBit examples, some of them copied as-is from [QBit Wiki](https://github.com/advantageous/qbit/wiki), while others include
 some changes to better illustrate the capabilities of QBit library and the use cases.
 
+-----
+
 ### QBit > Samples > TODO Service versions
 
 These samples shows how to implement a todo service using QBit with callbacks and service workers.
@@ -56,6 +58,7 @@ Start `qbit.samples.todo.workers.TodoServiceWorkersMain` to run the version usin
   That is because the callbacks used in `execOpAsync(...)` method (that processes `/todo/exec-op-async` requests)
 does not block the thread of main (`TodoService`'s) service queue.
 
+-----
 
 ### QBit Reactor > Samples > HR
 
@@ -100,3 +103,4 @@ Start `qbit.samples.hr.HRServiceMain`.
   time curl http://localhost:8888/v1/hr/department/ &
   ```
   The second request should be processed quickly, as it is not blocked by the first request (that takes 5 sec to complete).
+
