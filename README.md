@@ -24,7 +24,7 @@ Start `qbit.samples.todo.workers.TodoServiceWorkersMain` to run the version usin
   
 - Add a new todo:
 
-  ```bash
+  ```bash  
   curl -X POST -H "Content-Type: application/json" \
   -d '{"name":"First Task","description":"Something to do ..."}' \
   http://localhost:8080/services/todo-service/todo
@@ -38,17 +38,24 @@ Start `qbit.samples.todo.workers.TodoServiceWorkersMain` to run the version usin
 
 ##### Testing the responsiveness:
 
+As being a sync call (without a callback), the second request (to `/todo` for listing the todos) is waiting 
+on the queue to be served. Having this, the response time of this request is over 4 seconds.
 ```bash
 time curl "http://localhost:8080/v1/todo-service/todo/exec-op-sync?execTime=4" &
 time curl "http://localhost:8080/v1/todo-service/todo" &
-   
 ```
 
+In this case, although `/exec-op-async` is using callbacks for async response,
+still the first two are processed by the same thread (part of ExecuteOp service queue),
+but the third request is delivered right away, without any delay.
+
+That is because the callbacks used in `execOpAsync(...)` (that processes `/todo` requests)
+does not block the thread of TodoService service queue.
+
 ```bash
-time curl "http://localhost:8080/v1/todo-service/todo/exec-op-async?execTime=6" &
+time curl "http://localhost:8080/v1/todo-service/todo/exec-op-async?execTime=4" &
 time curl "http://localhost:8080/v1/todo-service/todo/exec-op-async?execTime=2" &
-time curl "http://localhost:8080/v1/todo-service/todo" &
-   
+time curl "http://localhost:8080/v1/todo-service/todo" & 
 ```
 
 
