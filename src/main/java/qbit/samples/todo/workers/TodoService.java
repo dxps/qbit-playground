@@ -87,7 +87,7 @@ public class TodoService {
 							"Timeout while async executing an op for execTime=" + execTime));
 				})
 				.setOnError(callback::onError)
-				.setTimeoutDuration(5).setTimeoutTimeUnit(TimeUnit.SECONDS)
+				.setTimeoutDuration(8).setTimeoutTimeUnit(TimeUnit.SECONDS)
 				.build();
 		
 		executeOpAsync.execute(responseCallback, new Op(execTime));
