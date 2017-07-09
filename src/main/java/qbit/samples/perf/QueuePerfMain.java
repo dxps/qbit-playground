@@ -1,4 +1,4 @@
-package io.advantageous.qbit.example.perf;
+package qbit.samples.perf;
 
 import io.advantageous.boon.core.Sys;
 import io.advantageous.qbit.queue.Queue;
