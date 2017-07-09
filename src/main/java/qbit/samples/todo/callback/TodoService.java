@@ -61,9 +61,10 @@ public class TodoService {
 	public int execOpSync(final @RequestParam("execTime") int execTime) {
 		
 		System.out.printf("%s | TodoService > execOpSync |-> execTime=%d\n", LocalTime.now(), execTime);
+		logger.debug(">>> execOpSync > execTime={}", execTime);
 		Op op = new Op(execTime);
 		new ExecuteOp().execute(op);
-		System.out.printf("%s | TodoService > execOpSync |<- execTime=%d\n", LocalTime.now(), execTime);
+		logger.debug("<<< execOpSync > execTime={}", execTime);
 		return op.resultExecTime();
 	}
 	
@@ -72,7 +73,6 @@ public class TodoService {
 	public void execOpAsync(final Callback<Boolean> callback,
 	                        final @RequestParam("execTime") int execTime) {
 		
-		// System.out.printf("%s | TodoService > execOpAsync |-> execTime=%d\n", LocalTime.now(), execTime);
 		logger.debug(">>> execOpAsync > execTime={}", execTime);
 		
 		final Callback<Boolean> responseCallback = reactor.callbackBuilder()
@@ -81,8 +81,8 @@ public class TodoService {
 					logger.info("<<< execOpAsync > execTime={}", execTime);
 				})
 				.setOnTimeout(() -> {
-					// callback.accept(false); One way.
-					// callback.onTimeout(); Another way
+					// callback.accept(false);  // one way
+					// callback.onTimeout();    // another way
 					callback.onError(new TimeoutException(
 							"Timeout while async executing an op for execTime=" + execTime));
 				})
