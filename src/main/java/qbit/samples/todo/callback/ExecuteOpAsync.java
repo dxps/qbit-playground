@@ -4,7 +4,9 @@ package qbit.samples.todo.callback;
 import io.advantageous.qbit.reactive.Callback;
 
 /**
- * Async interface for ExecuteOpAsync.
+ * Interface for asynchronous calls to ExecuteOp.<br/><br/>
+ * This is created by ExecuteOp's service queue, using:<br>
+ *   <code>execOpServiceQueue.createProxy(ExecuteOpAsync.class)</code>
  *
  * @author vision8
  */
